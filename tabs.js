@@ -22,17 +22,6 @@ function openfile(evt, filename) {
 
 
 
-function creatediv(filename){
-
-    var div = document.createElement("div");
-    div.innerHTML = "<h3>"+filename+"</h3>" +
-        "<input type=\"text\" name=\""+filename+"\">";
-
-    div.setAttribute("id",filename);
-    div.setAttribute("class","tabcontent");
-    document.body.appendChild(div);
-}
-
 function createeditor(filename){
     var div = document.createElement("div");
 
@@ -43,9 +32,9 @@ function createeditor(filename){
     editordiv.setAttribute("id",filename+"editor");
     editordiv.setAttribute("class","editor");
 
-    editordiv.innerText =  "function foo(items) {" +
-"        var x = \"All this is syntax highlighted\";" +
-"        return x;}";
+    editordiv.innerText =  `function foo(items) {
+        var x = \"All this is syntax highlighted\";
+        return x;}`;
 
     div.appendChild(editordiv);
     document.body.appendChild(div);
