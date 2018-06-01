@@ -20,7 +20,11 @@ function openfile(evt, filename) {
 }
 
 
-
+function changelanguage(divname,language) {
+    console.log("hello");
+    var editor  = document.getElementById(divname);
+    editor.setMode("ace/mode/"+language);
+}
 
 function createeditor(filename){
     var div = document.createElement("div");
@@ -32,17 +36,29 @@ function createeditor(filename){
     editordiv.setAttribute("id",filename+"editor");
     editordiv.setAttribute("class","editor");
 
+    var selectoption =     `<select onchange="changelanguage('`+filename+`editor',value)">
+                            <option  value="python">Python</option>
+                            <option  value="c++">C++</option>
+                            <option  value="javascript">Javascript</option>
+                            <option  value="java">java</option>
+                            </select>`;
+
+
+
+
     editordiv.innerText =  `function foo(items) {
         var x = \"All this is syntax highlighted\";
         return x;}`;
 
+    div.innerHTML = selectoption;
     div.appendChild(editordiv);
+
     document.body.appendChild(div);
 
 
     var editor = ace.edit(filename+'editor');
     editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/javascript");
+    editor.session.setMode("ace/mode/java");
 
 
 }
