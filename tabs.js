@@ -55,7 +55,7 @@ class tab {
         this.editordiv.setAttribute("id",this.filename+"editor");
         this.editordiv.setAttribute("class","editor");
 
-        var selectoption =     `<select onchange="tabs['`+this.filename+`'].changelanguage(value)">
+        var selectoption =     `<select onchange="tabs['`+this.filename+`'].changelanguage(value)" class = "languageselect">
                             <option  value="python">Python</option>
                             <option  value="c++">C++</option>
                             <option  value="javascript">Javascript</option>
