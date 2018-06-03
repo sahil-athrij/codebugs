@@ -20,23 +20,42 @@ function openfile(evt, filename) {
 }
 
 
-function changelanguage(divname,language) {
-    console.log("hello");
-    var editor  = document.getElementById(divname);
-    editor.setMode("ace/mode/"+language);
-}
 
-function createeditor(filename){
-    var div = document.createElement("div");
 
-    div.setAttribute("id",filename);
-    div.setAttribute("class","tabcontent");
 
-    var editordiv = document.createElement("div");
-    editordiv.setAttribute("id",filename+"editor");
-    editordiv.setAttribute("class","editor");
+class tab {
 
-    var selectoption =     `<select onchange="changelanguage('`+filename+`editor',value)">
+    constructor(){
+        this.filename = prompt("Please enter file name", "file ");
+
+        this.createbutton(this.filename);
+        this.createeditor(this.filename);
+        openfile(event,this.filename);
+        return this
+    }
+
+    createbutton(){
+        this.button = document.createElement("button");
+        this.button.setAttribute("id", this.filename+"tab");
+        this.button.innerHTML = this.filename;
+        this.button.setAttribute("class", "tablinks");
+        this.button.setAttribute("onclick","openfile(event,'" +this.filename+"' )");
+        var tabs = document.getElementById("tabs");
+        //Append the element in page (in span).
+        tabs.appendChild(this.button);
+    }
+
+    createeditor(){
+        this.container = document.createElement("div");
+
+        this.container.setAttribute("id",this.filename);
+        this.container.setAttribute("class","tabcontent");
+
+        this.editordiv = document.createElement("div");
+        this.editordiv.setAttribute("id",this.filename+"editor");
+        this.editordiv.setAttribute("class","editor");
+
+        var selectoption =     `<select onchange="tabs['`+this.filename+`'].changelanguage(value)">
                             <option  value="python">Python</option>
                             <option  value="c++">C++</option>
                             <option  value="javascript">Javascript</option>
@@ -46,44 +65,32 @@ function createeditor(filename){
 
 
 
-    editordiv.innerText =  `function foo(items) {
+        this.editordiv.innerText =  `function foo(items) {
         var x = \"All this is syntax highlighted\";
         return x;}`;
 
-    div.innerHTML = selectoption;
-    div.appendChild(editordiv);
+        this.container.innerHTML = selectoption;
+        this.container.appendChild(this.editordiv);
 
-    document.body.appendChild(div);
+        document.body.appendChild(this.container);
 
 
-    var editor = ace.edit(filename+'editor');
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/java");
+        this.editor = ace.edit(this.filename+'editor');
+        this.editor.setTheme("ace/theme/monokai");
+        this.editor.session.setMode("ace/mode/javascript");
 
+
+    }
+
+    changelanguage(language) {
+        console.log("hello");
+        this.editor.session.setMode("ace/mode/"+language);
+    }
+}
+tabs = {};
+
+function addtab(event) {
+    var name = new tab(event);
+    tabs[name.filename] = name
 
 }
-
-function createbutton(filename){
-    var button = document.createElement("button");
-    //Assign different attributes to the element.
-    button.setAttribute("id", filename+"tab");
-    button.innerHTML = filename;
-    button.setAttribute("class", "tablinks");
-    button.setAttribute("onclick","openfile(event,'" +filename+"' )");
-    var tabs = document.getElementById("tabs");
-    //Append the element in page (in span).
-    tabs.appendChild(button);
-
-}
-
-function addtab(){
-    var filename = prompt("Please enter file name", "file ");
-    //Create an input type dynamically.
-
-
-    createbutton(filename);
-    createeditor(filename);
-    openfile(event,filename);
-}
-
-
