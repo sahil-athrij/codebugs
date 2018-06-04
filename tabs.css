@@ -1,20 +1,28 @@
+body {
+    background-color: #BAFCF8;
+}
+
 .editor {
     position: absolute;
     top: 50px;
     right: 0;
     height: 50%;
     left: 0;
+   background-color:  #E3FCFB ; 
+
 }
 
 .tablinks{
+    background: #566573  ;
 
 }
 
 .tabcontent{
-
 }
 
 .languageselect{
+    background: #566573  ;
+    float : right;
 
 }
 
