@@ -17,3 +17,12 @@
 .languageselect{
 
 }
+
+.console{
+    background: black;
+    position: absolute;
+    top: 70%;
+    right: 0;
+    height: 30%;
+    left: 0;
+}

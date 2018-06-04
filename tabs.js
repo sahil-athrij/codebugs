@@ -72,7 +72,8 @@ class tab {
         this.container.innerHTML = selectoption;
         this.container.appendChild(this.editordiv);
 
-        document.body.appendChild(this.container);
+        var editorbody = document.getElementById("editor_location")
+        editorbody.appendChild(this.container);
 
 
         this.editor = ace.edit(this.filename+'editor');
