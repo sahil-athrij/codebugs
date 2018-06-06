@@ -28,9 +28,11 @@ class tab {
     constructor(){
         this.filename = prompt("Please enter file name", "file ");
 
-        this.createbutton(this.filename);
-        this.createeditor(this.filename);
+        this.createbutton();
+        this.createeditor();
+        this.createform();
         openfile(event,this.filename);
+
         return this
     }
 
@@ -72,13 +74,18 @@ class tab {
         this.container.innerHTML = selectoption;
         this.container.appendChild(this.editordiv);
 
-        var editorbody = document.getElementById("editor_location")
+        var editorbody = document.getElementById("editor_location");
         editorbody.appendChild(this.container);
 
 
         this.editor = ace.edit(this.filename+'editor');
         this.editor.setTheme("ace/theme/monokai");
         this.editor.session.setMode("ace/mode/javascript");
+
+        this.savebutton = document.createElement("button");
+        this.savebutton.innerHTML = "save";
+        this.savebutton.setAttribute("onclick","tabs['" +this.filename+"'].savefile()");
+        document.body.appendChild(this.savebutton)
 
 
     }
@@ -87,6 +94,31 @@ class tab {
         console.log("hello");
         this.editor.session.setMode("ace/mode/"+language);
     }
+
+    createform(){
+        var internal =  `<form action = "/cgi-bin/form.py" method = "post" target = "_blank" style= "display:none">
+                            <textarea name = "textcontent" cols = "40" rows = "4" id = "textarea`+this.filename+`">
+                            
+                            </textarea>
+                            <input type = "submit" value = "Submit" id = "send`+this.filename+`"/>
+                        </form>`;
+
+        this.form  = document.createElement("div");
+        this.form.innerHTML = internal;
+        this.form.setAttribute("id",this.filename+"form");
+        var forms = document.getElementById("hiddenforms");
+        forms.appendChild(this.form);
+        console.log("Ehhlo");
+
+    }
+
+    savefile(){
+        var fo = document.getElementById("textarea"+this.filename);
+        fo.innerText = this.editor.getValue();
+        var bu = document.getElementById("send"+this.filename)
+        bu.click();
+    }
+
 }
 tabs = {};
 
